@@ -1,0 +1,19 @@
+# PrivaVox app runtime (Windows) — curated manifest, installed by
+# Install-PrivaVox.ps1 into %LOCALAPPDATA%\PrivaVox\venv (the Python package
+# keeps its internal codename `flow`). Only what flow/*.py imports at runtime on
+# Windows; transitive deps (ctranslate2, huggingface-hub, tokenizers, av,
+# onnxruntime, six, ...) resolve on their own.
+# Shared pins mirror requirements-runtime.txt (macOS). Windows-only pins are
+# the latest stable on PyPI as of 2026-07-06, verified via the pypi.org JSON
+# API (not guessed). faster-whisper/pystray/Pillow are the exact versions
+# installed and tested on the mac dev venv in phase W2 (CPU smoke test
+# green); bump only with that test green.
+# NB: pywin32 was dropped in W2 — the clipboard uses raw ctypes
+# (flow/platform_win32/insert_win.py), nothing imports win32api/win32con.
+faster-whisper==1.2.1
+numpy==2.4.6
+sounddevice==0.5.5
+pynput==1.8.2
+requests==2.34.2
+pystray==0.19.5
+Pillow==12.3.0
