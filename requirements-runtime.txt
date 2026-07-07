@@ -1,0 +1,17 @@
+# Flow app runtime — curated manifest, installed by scripts/sync-app-runtime.sh.
+# Only what flow/*.py imports at runtime; transitive deps resolve on their own.
+# Pins mirror requirements.txt (the full dev freeze, which stays for the repo venv).
+# NB: mlx-whisper declares torch but never imports it outside its unused
+# weight-conversion module — the sync script installs with an exclude for torch
+# (spares a ~2 GB install per machine). scipy IS needed (mlx_whisper.timing).
+mlx-whisper==0.4.3
+numpy==2.4.6
+sounddevice==0.5.5
+pynput==1.8.2
+requests==2.34.2
+rumps==0.4.0
+pyobjc-core==12.2.1
+pyobjc-framework-Cocoa==12.2.1
+pyobjc-framework-Quartz==12.2.1
+pyobjc-framework-ApplicationServices==12.2.1
+pyobjc-framework-CoreText==12.2.1
