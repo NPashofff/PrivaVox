@@ -1,0 +1,7 @@
+# Per-platform line endings — installers must not be converted by any client's
+# core.autocrlf. Unix launchers/scripts stay LF; Windows scripts stay CRLF.
+*.sh        text eol=lf
+*.command   text eol=lf
+*.py        text eol=lf
+*.ps1       text eol=crlf
+*.bat       text eol=crlf
