@@ -131,6 +131,18 @@ def _setup_logging() -> None:
         sys.stdout = log
     if headless or sys.stderr is None:
         sys.stderr = log
+    if headless:
+        # uv-venv quirk: Scripts\pythonw.exe is a trampoline that execs the
+        # base python.exe (python-build-standalone ships no pythonw), so a
+        # live console window lands in the taskbar — and closing it kills
+        # the app. Detach: with no attached process the console dies, the
+        # app lives on. Logs are already redirected above.
+        try:
+            import ctypes
+
+            ctypes.windll.kernel32.FreeConsole()
+        except Exception:
+            pass  # non-win32 dev run / no console attached — nothing to free
 
 
 # ---- settings (module-level so the mac suite can test them headlessly) ------

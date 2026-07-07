@@ -223,3 +223,31 @@ def test_paste_text_restore_is_best_effort(paste_env, monkeypatch):
 def test_can_post_events_is_true_on_windows_contract():
     # No TCC on Windows: never a "clipboard-only" degradation by permission.
     assert insert_win.can_post_events() is True
+
+
+def test_post_ctrl_v_uses_virtual_key_not_character(monkeypatch):
+    """The V must go out as VK 0x56, never the character "v": on a Cyrillic
+    keyboard layout VkKeyScan("v") fails and pynput would inject a Unicode
+    packet that no app recognizes as the Ctrl+V accelerator (the paste then
+    silently no-ops — the original Windows 'нищо не вмъква' bug)."""
+    import pynput.keyboard as pk
+
+    events: list[tuple] = []
+
+    class FakeController:
+        def press(self, key):
+            events.append(("press", key))
+
+        def release(self, key):
+            events.append(("release", key))
+
+    monkeypatch.setattr(pk, "Controller", FakeController)
+    insert_win._post_ctrl_v(0.0)
+
+    v_key = pk.KeyCode.from_vk(0x56)
+    assert events == [
+        ("press", pk.Key.ctrl_l),
+        ("press", v_key),
+        ("release", v_key),
+        ("release", pk.Key.ctrl_l),
+    ]

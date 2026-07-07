@@ -133,16 +133,23 @@ def can_post_events() -> bool:
 
 def _post_ctrl_v(key_event_delay_s: float) -> None:
     """Synthesize Ctrl+V (SendInput via pynput) with explicit modifier."""
-    from pynput.keyboard import Controller, Key
+    from pynput.keyboard import Controller, Key, KeyCode
 
     kb = Controller()
+    # VK_V (0x56), never the character "v": pynput resolves characters via
+    # VkKeyScan in the process's CURRENT keyboard layout, and on a Cyrillic
+    # layout there is no Latin "v" — it falls back to a Unicode packet that
+    # no app recognizes as the Ctrl+V accelerator (paste silently no-ops).
+    # Accelerators match virtual-key codes, which are layout-independent —
+    # same idea as the mac shell posting the physical V key (KVK_ANSI_V).
+    v_key = KeyCode.from_vk(0x56)
     # Explicit press/release sequencing (mirrors the mac CGEvent flag care):
     # we own the whole chord instead of composing with held physical keys.
     kb.press(Key.ctrl_l)
     time.sleep(key_event_delay_s)
-    kb.press("v")
+    kb.press(v_key)
     time.sleep(key_event_delay_s)
-    kb.release("v")
+    kb.release(v_key)
     time.sleep(key_event_delay_s)
     kb.release(Key.ctrl_l)
 
