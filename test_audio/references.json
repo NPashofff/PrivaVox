@@ -1,0 +1,44 @@
+{
+  "en_01_date_number.wav": {
+    "lang": "en",
+    "voice": "Samantha",
+    "text": "Let's meet on March 3rd at 4 o'clock. I already sent you the 12 invoices we talked about.",
+    "note": "two conversational sentences with a date and a number"
+  },
+  "en_02_name_email.wav": {
+    "lang": "en",
+    "voice": "Samantha",
+    "text": "John Anderson said to reach him at john dot anderson at example dot com if you have questions.",
+    "note": "proper name and an email-style phrase"
+  },
+  "en_03_rambling.wav": {
+    "lang": "en",
+    "voice": "Samantha",
+    "text": "So, um, I was thinking maybe we should, you know, push the meeting back a little, because honestly I haven't finished the report yet, and, uh, my internet was down half the morning, which was really frustrating, so yeah, let's just say Thursday instead, if that works for you.",
+    "note": "longer ~15s rambling passage with filler words and a self-correction-like restart"
+  },
+  "bg_01_date_number.wav": {
+    "lang": "bg",
+    "voice": "Daria",
+    "text": "Ще се видим на трети март в четири часа. Вече ти изпратих дванайсетте фактури, за които говорихме.",
+    "note": "two conversational sentences with число (number) and дата (date)"
+  },
+  "bg_02_name_address.wav": {
+    "lang": "bg",
+    "voice": "Daria",
+    "text": "Иван Петров каза да му пишете на улица Витоша номер седем, ако имате въпроси.",
+    "note": "име (Иван Петров) and адрес (address)"
+  },
+  "bg_03_rambling.wav": {
+    "lang": "bg",
+    "voice": "Daria",
+    "text": "Ами, значи, мислех си, че може би трябва да отложим срещата малко, защото честно казано още не съм готов с доклада, а и интернетът ми не работеше половината сутрин, което беше доста дразнещо, така че хайде просто да кажем четвъртък, ако си свободен през юни.",
+    "note": "longer ~15s passage with natural Cyrillic including ъ, щ, ю, я"
+  },
+  "silence_2s.wav": {
+    "lang": null,
+    "voice": null,
+    "text": "",
+    "note": "2 seconds of 16kHz mono silence, generated via Python wave module, for the hallucination check"
+  }
+}
