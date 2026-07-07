@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # PrivaVox uninstaller for Windows 10/11 — double-click "Uninstall-PrivaVox.bat".
 # Removes: the running app, the runtime at %LOCALAPPDATA%\PrivaVox (code, venv,
 # settings, log, dictionary, icons), and the Start Menu + Startup shortcuts.
