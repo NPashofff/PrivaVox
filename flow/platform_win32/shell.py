@@ -6,7 +6,7 @@ flow.app.main() when sys.platform == "win32":
 - system tray icon; live state in the tooltip/left-click HUD (Windows has no
   text in the tray, so the emoji state lives in the tooltip title)
 - menu: status line, език на диктовката (auto/bg/en), клавиш за диктовка
-  (ctrl_r/alt_r/f13 — live restart of the push-to-talk listener), AI модел
+  (ctrl_r/alt_r/f12 — live restart of the push-to-talk listener), AI модел
   (динамично от Ollama /api/tags), личен речник, лог, изход
 - settings.json load/save (merge-write: language_mode, ollama_model, hotkey,
   stt_engine, stt_model — the last two are provisioned by
@@ -67,7 +67,7 @@ def _langs():
 def _hotkeys():
     return (("ctrl_r", t("Дясна Ctrl", "Right Ctrl")),
             ("alt_r", t("Дясна Alt (внимание: AltGr)", "Right Alt (note: AltGr)")),
-            ("f13", t("F13", "F13")))
+            ("f12", t("F12", "F12")))
 
 
 # the two selectable UI languages, for the "Език на интерфейса" switcher
@@ -78,7 +78,7 @@ _UI_LANGS = (("bg", "Български"), ("en", "English"))
 def _hotkey_hints():
     return {"ctrl_r": t("десния Ctrl", "right Ctrl"),
             "alt_r": t("десния Alt", "right Alt"),
-            "f13": t("F13", "F13")}
+            "f12": t("F12", "F12")}
 
 
 # Back-compat module constants: some tests iterate _HOTKEYS / read _HOTKEY_HINTS

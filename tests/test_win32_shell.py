@@ -119,11 +119,11 @@ def test_save_settings_creates_fresh_file(tmp_path):
 def test_hotkey_setting_round_trip_and_tolerance(tmp_path):
     path = tmp_path / "settings.json"
     config = FlowConfig()
-    config.hotkey = "f13"                    # a hotkey-picker choice
+    config.hotkey = "f12"                    # a hotkey-picker choice
     shell.save_settings(config, str(path))
     fresh = FlowConfig()
     shell.load_settings(fresh, str(path))
-    assert fresh.hotkey == "f13"
+    assert fresh.hotkey == "f12"
     path.write_text(json.dumps({"hotkey": "hyper"}), encoding="utf-8")
     fresh = FlowConfig()
     shell.load_settings(fresh, str(path))    # unknown key name → ignored, loudly

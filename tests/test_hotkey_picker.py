@@ -40,7 +40,8 @@ def test_resolve_hotkey_name_auto_per_platform(monkeypatch):
     assert hotkey.resolve_hotkey_name("auto") == "alt_r"
     monkeypatch.setattr(hotkey, "IS_MAC", False)
     assert hotkey.resolve_hotkey_name("auto") == "ctrl_r"
-    assert hotkey.resolve_hotkey_name("f13") == "f13"   # explicit passes through
+    assert hotkey.resolve_hotkey_name("f12") == "f12"   # explicit passes through
+    assert hotkey.resolve_hotkey_name("f13") == "f13"   # legacy saved pick still resolves
     with pytest.raises(ValueError, match="Unsupported hotkey"):
         hotkey.resolve_hotkey_name("hyper")
 
@@ -49,6 +50,7 @@ def test_resolve_hotkey_for_all_picker_choices():
     for key, expected in (("alt_r", keyboard.Key.alt_r),
                           ("cmd_r", keyboard.Key.cmd_r),
                           ("ctrl_r", keyboard.Key.ctrl_r),
+                          ("f12", keyboard.Key.f12),
                           ("f13", keyboard.Key.f13)):
         assert hotkey.resolve_hotkey(key) == expected
 
@@ -144,7 +146,7 @@ def _stub_shell(cls, tmp_path, monkeypatch):
 def test_set_hotkey_live_restart(cls_name, tmp_path, monkeypatch):
     cls = flow_app.FlowApp if cls_name == "mac" else win_shell.PrivaVoxApp
     app, old, cbs, made = _stub_shell(cls, tmp_path, monkeypatch)
-    pick = "cmd_r" if cls_name == "mac" else "f13"
+    pick = "cmd_r" if cls_name == "mac" else "f12"
 
     cls.set_hotkey(app, pick)
 
@@ -165,7 +167,7 @@ def test_set_hotkey_ignored_while_recording(cls_name, tmp_path, monkeypatch):
     app, old, _cbs, made = _stub_shell(cls, tmp_path, monkeypatch)
     app._recording_active = True             # dictation in flight
 
-    cls.set_hotkey(app, "f13")
+    cls.set_hotkey(app, "f12")
 
     assert not old.stopped and app._ptt is old and not made
     assert app.config.hotkey == "auto"       # pick ignored
@@ -180,12 +182,12 @@ def test_set_hotkey_before_boot_saves_without_restart(cls_name, tmp_path, monkey
     app, _old, _cbs, made = _stub_shell(cls, tmp_path, monkeypatch)
     app._ptt = None                          # _boot has not built one yet
 
-    cls.set_hotkey(app, "f13")
+    cls.set_hotkey(app, "f12")
 
     assert not made                          # nothing to restart (yet)
-    assert app.config.hotkey == "f13"        # _boot will pick this up
+    assert app.config.hotkey == "f12"        # _boot will pick this up
     on_disk = json.loads((tmp_path / "settings.json").read_text(encoding="utf-8"))
-    assert on_disk["hotkey"] == "f13"
+    assert on_disk["hotkey"] == "f12"
 
 
 # --------------------------------------------------------------------------
@@ -194,11 +196,12 @@ def test_set_hotkey_before_boot_saves_without_restart(cls_name, tmp_path, monkey
 
 def test_hotkey_hints_follow_the_pick(tmp_path, monkeypatch):
     app, *_ = _stub_shell(flow_app.FlowApp, tmp_path, monkeypatch)
+    monkeypatch.setattr(hotkey, "IS_MAC", True)   # mac half must not depend on the host OS
     assert app._hotkey_hint() == "дясната ⌥"      # auto → alt_r on mac
     app.config.hotkey = "cmd_r"
     assert app._hotkey_hint() == "дясната ⌘"
-    app.config.hotkey = "f13"
-    assert app._hotkey_hint() == "F13"
+    app.config.hotkey = "f12"
+    assert app._hotkey_hint() == "F12"
 
     wapp, *_ = _stub_shell(win_shell.PrivaVoxApp, tmp_path, monkeypatch)
     monkeypatch.setattr(hotkey, "IS_MAC", False)  # what a real Windows sees

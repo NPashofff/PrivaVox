@@ -24,7 +24,8 @@ _KEY_ALIASES: dict[str, keyboard.Key] = {
     "alt_l": keyboard.Key.alt_l,
     "cmd_r": keyboard.Key.cmd_r,
     "ctrl_r": keyboard.Key.ctrl_r,    # the Windows default (right Alt is AltGr on BG layouts)
-    "f13": keyboard.Key.f13,
+    "f12": keyboard.Key.f12,
+    "f13": keyboard.Key.f13,          # legacy: settings.json saved before the F12 switch
 }
 
 

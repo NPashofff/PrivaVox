@@ -147,14 +147,14 @@ def _hotkeys() -> tuple[tuple[str, str], ...]:
     # but the menu offers only combinations that make sense on a mac keyboard).
     return (("alt_r", t("Дясна ⌥ (Option)", "Right ⌥ (Option)")),
             ("cmd_r", t("Дясна ⌘ (Command)", "Right ⌘ (Command)")),
-            ("f13", "F13"))
+            ("f12", "F12"))
 
 
 # how the key reads inside "задръж … и говори" status texts
 def _hotkey_hints() -> dict[str, str]:
     return {"alt_r": t("дясната ⌥", "the right ⌥"),
             "cmd_r": t("дясната ⌘", "the right ⌘"),
-            "f13": "F13"}
+            "f12": "F12"}
 
 
 # The UI-language picker itself (independent of dictation language). Keys are

@@ -633,7 +633,14 @@ try {
 # --- 8. Старт ------------------------------------------------------------------------
 Write-Step (T 'Стартиране на PrivaVox' 'Starting PrivaVox')
 [void](Show-FlowDialog -Message ((T 'Инсталацията завърши! Пускам PrivaVox.' 'Installation complete! Launching PrivaVox.') + "`r`n`r`n" + (T 'Windows може да поиска достъп до микрофона — разреши го.' 'Windows may ask for microphone access — allow it.') + "`r`n`r`n" + (T 'Ползване: задръж дясната Ctrl, говори, пусни я.' 'Usage: hold the right Ctrl key, speak, then release it.')) -Buttons (T 'Пусни PrivaVox' 'Launch PrivaVox'))
-Start-Process -FilePath $PyW -ArgumentList '-m', 'flow.app' -WorkingDirectory $AppDir
+# Ако инсталаторът е пуснат "като администратор", Start-Process би предал админ
+# правата на приложението (после то не може да се спре/обнови без админ).
+# explorer.exe стартира шорткъта винаги с нормалните права на потребителя.
+if ($lnkPath -and (Test-Path $lnkPath)) {
+    Start-Process explorer.exe -ArgumentList $lnkPath
+} else {
+    Start-Process -FilePath $PyW -ArgumentList '-m', 'flow.app' -WorkingDirectory $AppDir
+}
 Write-Ok (T 'PrivaVox е стартиран — виж иконата в системната лента (до часовника)' 'PrivaVox has started — look for the icon in the system tray (near the clock)')
 Write-Host ''
 Write-Host (T 'Готово! Този прозорец може да се затвори.' 'Done! You can close this window.') -ForegroundColor Green
