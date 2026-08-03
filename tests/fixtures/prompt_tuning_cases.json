@@ -1,0 +1,70 @@
+[
+  {
+    "id": "bg-rambling-long",
+    "lang": "bg",
+    "note": "Whisper-style punctuated long rambling dictation. The Phase 1 weakness triggers on already-punctuated raw text: the model keeps mild discourse openers ('Ами, значи,'). Content differs from bg_03_rambling.wav and from the few-shot examples so this measures generalization.",
+    "raw": "Ами, значи, исках да ти кажа, че ъъъ вчера говорих с колегите от офиса и те, нали, казаха, че проектът ъъъ един вид ще се забави с две седмици, защото доставчикът, такова, още не е пратил материалите, така че ще трябва, ъъъ, да преместим презентацията за края на месеца.",
+    "expectations": [
+      "discourse fillers removed everywhere, including the sentence opener: ами, значи, ъъъ, нали, такова, един вид",
+      "content keywords preserved: колеги, проект, две седмици, доставчик, презентация",
+      "meaning preserved exactly, no content added",
+      "language stays Bulgarian"
+    ]
+  },
+  {
+    "id": "en-rambling-long",
+    "lang": "en",
+    "note": "Whisper-style punctuated long rambling dictation with 'like', 'you know', 'I mean' and a 'So,' opener. Content differs from en_03_rambling.wav and from the few-shot examples.",
+    "raw": "So, um, I was like thinking that, you know, we should probably, I mean, update the onboarding documentation, because like half the steps are, you know, totally outdated, and, um, the new hires keep getting stuck on the database setup part, so, like, can you review the draft by Friday?",
+    "expectations": [
+      "discourse fillers removed everywhere, including the 'So,' opener: um, like, you know, I mean",
+      "content keywords preserved: onboarding, documentation, outdated, database, Friday",
+      "still ends as a question (review the draft by Friday?)",
+      "language stays English"
+    ]
+  },
+  {
+    "id": "bg-meaningful-znachi",
+    "lang": "bg",
+    "note": "ADVERSARIAL over-stripping guard: 'значи' here is the verb 'means', not a filler.",
+    "raw": "това значи много за мен и искам да ти благодаря",
+    "expectations": [
+      "'значи' (= means) MUST survive cleaning",
+      "meaning preserved: това значи много за мен",
+      "language stays Bulgarian"
+    ]
+  },
+  {
+    "id": "bg-meaningful-nali",
+    "lang": "bg",
+    "note": "ADVERSARIAL over-stripping guard: 'нали' carries the question ('you are coming tomorrow, right?'). NOTE: the pre-tuning prompt already failed this case (dropped 'нали' and flattened the question into a statement).",
+    "raw": "нали ще дойдеш утре на срещата в десет",
+    "expectations": [
+      "'нали' MUST survive cleaning (it is what makes this a question)",
+      "content preserved: дойдеш, утре, срещата, десет",
+      "language stays Bulgarian"
+    ]
+  },
+  {
+    "id": "bg-meaningful-takova",
+    "lang": "bg",
+    "note": "ADVERSARIAL over-stripping guard: 'такова' here is the demonstrative 'such (a thing)', not a filler.",
+    "raw": "такова нещо не съм казвал никога",
+    "expectations": [
+      "'такова' (= such) MUST survive cleaning",
+      "negation preserved: не съм казвал",
+      "language stays Bulgarian"
+    ]
+  },
+  {
+    "id": "en-meaningful-like",
+    "lang": "en",
+    "note": "ADVERSARIAL over-stripping guard: 'like' here is the verb in 'would like', not a filler.",
+    "raw": "I would like to schedule a meeting for monday morning",
+    "expectations": [
+      "'like' (verb) MUST survive cleaning",
+      "content preserved: schedule, meeting, Monday morning",
+      "language stays English"
+    ]
+  }
+]
