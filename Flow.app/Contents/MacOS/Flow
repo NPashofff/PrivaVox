@@ -1,0 +1,20 @@
+#!/bin/zsh
+# Flow.app launcher: menu bar dictation app; log at ~/Library/Logs/Flow.log
+# Runs the private runtime from ~/Library/Application Support/Flow so the app
+# never needs to read TCC-protected folders (Documents). Provision/update it
+# with scripts/sync-app-runtime.sh from the project repo.
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+FLOW_HOME="$HOME/Library/Application Support/Flow"
+# .../Flow.app — the python side relaunches via `open` on this after
+# permission grants (single-instance is a flock in flow/singleinstance.py,
+# so no pgrep guard here: the python process itself refuses to double-start)
+export FLOW_BUNDLE_PATH="${0:A:h:h:h}"
+
+if [ ! -x "$FLOW_HOME/venv/bin/python" ]; then
+  /usr/bin/osascript \
+    -e 'display dialog "Липсва runtime средата на Flow.\n\nПусни scripts/sync-app-runtime.sh от папката на проекта и опитай пак." buttons {"OK"} default button "OK" with title "Flow" with icon caution' > /dev/null 2>&1
+  exit 1
+fi
+
+cd "$FLOW_HOME" || exit 1
+exec "$FLOW_HOME/venv/bin/python" -u -m flow.app >> "$HOME/Library/Logs/Flow.log" 2>&1
