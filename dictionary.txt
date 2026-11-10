@@ -1,0 +1,15 @@
+# Flow personal dictionary
+#
+# One term per line: names, brands, jargon that Whisper or the cleanup LLM
+# tends to mis-spell. Lines starting with "#" and blank lines are ignored.
+# EN and BG entries can be mixed freely.
+#
+# This file is read at daemon/sidecar startup (edit it, then restart flow /
+# flow.server for changes to take effect). Terms bias Whisper decoding and
+# get their spelling normalized during cleanup.
+#
+# Examples (uncomment / edit / add your own):
+# Борис Примеров
+# Елена Тестова
+# Wispr Flow
+# BgGPT

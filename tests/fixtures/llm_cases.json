@@ -1,0 +1,91 @@
+[
+  {
+    "id": "en-filler-heavy",
+    "lang": "en",
+    "raw": "um so I was thinking we should uh probably move the the meeting to thursday umm yeah thursday afternoon",
+    "expectations": [
+      "fillers removed (um, uh, umm)",
+      "duplicated word 'the the' collapsed to one",
+      "reads as a single natural sentence: move the meeting to Thursday afternoon",
+      "meaning preserved exactly, no content added",
+      "language stays English"
+    ]
+  },
+  {
+    "id": "en-self-correction",
+    "lang": "en",
+    "raw": "send the report to john on tuesday no wait actually wednesday morning and cc maria",
+    "expectations": [
+      "self-correction applied: final day is Wednesday morning, Tuesday must NOT appear in output",
+      "correction markers ('no wait actually') removed",
+      "John and cc Maria both preserved",
+      "language stays English"
+    ]
+  },
+  {
+    "id": "en-question-not-answered",
+    "lang": "en",
+    "raw": "what time is the meeting tomorrow and did anyone book the room",
+    "expectations": [
+      "output remains a question (or two questions), NOT answered",
+      "no invented time or booking status added",
+      "only punctuation/capitalization cleanup expected",
+      "language stays English"
+    ]
+  },
+  {
+    "id": "en-instruction-looking-dictation",
+    "lang": "en",
+    "raw": "write an email to the team saying the deploy is postponed until friday",
+    "expectations": [
+      "text is cleaned dictation ABOUT writing an email, not an actually composed/expanded email",
+      "must not add salutation, sign-off, or expanded email body content not present in raw transcript",
+      "content preserved: deploy postponed until Friday, addressed to the team",
+      "language stays English"
+    ]
+  },
+  {
+    "id": "bg-filler-heavy",
+    "lang": "bg",
+    "raw": "ъъъ значи мислех си че ами трябва да преместим срещата за четвъртък ъъъ да четвъртък следобед",
+    "expectations": [
+      "Bulgarian fillers removed (ъъъ, ами, значи-as-filler)",
+      "reads as a natural single sentence: трябва да преместим срещата за четвъртък следобед",
+      "meaning preserved exactly, no content added",
+      "language stays Bulgarian (not translated to English)"
+    ]
+  },
+  {
+    "id": "bg-self-correction",
+    "lang": "bg",
+    "raw": "прати доклада на иван във вторник не чакай всъщност в сряда сутринта и сложи мария в копие",
+    "expectations": [
+      "self-correction applied: final day is сряда сутринта, вторник must NOT appear in output",
+      "correction markers ('не чакай всъщност') removed",
+      "Иван preserved and Мария в копие preserved",
+      "language stays Bulgarian"
+    ]
+  },
+  {
+    "id": "bg-question-not-answered",
+    "lang": "bg",
+    "raw": "коя е столицата на франция и кога излита полетът утре",
+    "expectations": [
+      "output remains a question, NOT answered (must NOT say 'Париж')",
+      "no invented flight time added",
+      "only punctuation/capitalization cleanup expected",
+      "language stays Bulgarian"
+    ]
+  },
+  {
+    "id": "bg-mixed-numbers-names",
+    "lang": "bg",
+    "raw": "ъъ купи ами шест не осем билета за концерта на петнайсети юли за иван петров",
+    "expectations": [
+      "self-correction applied: final number is осем (eight), шест (six) must NOT appear in output",
+      "fillers removed (ъъ, ами)",
+      "date (петнайсети юли) and name (Иван Петров) preserved exactly",
+      "language stays Bulgarian, numbers may stay as words or digits but value must be 8"
+    ]
+  }
+]
